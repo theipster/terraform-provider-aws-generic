@@ -32,7 +32,45 @@ func (d *coffeesDataSource) Metadata(_ context.Context, req datasource.MetadataR
 
 // Schema defines the schema for the data source.
 func (d *coffeesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
-	resp.Schema = schema.Schema{}
+	resp.Schema = schema.Schema{
+		Attributes: map[string]schema.Attribute{
+			"coffees": schema.ListNestedAttribute{
+				Computed: true,
+				NestedObject: schema.NestedAttributeObject{
+					Attributes: map[string]schema.Attribute{
+						"id": schema.Int64Attribute{
+							Computed: true,
+						},
+						"name": schema.StringAttribute{
+							Computed: true,
+						},
+						"teaser": schema.StringAttribute{
+							Computed: true,
+						},
+						"description": schema.StringAttribute{
+							Computed: true,
+						},
+						"price": schema.Float64Attribute{
+							Computed: true,
+						},
+						"image": schema.StringAttribute{
+							Computed: true,
+						},
+						"ingredients": schema.ListNestedAttribute{
+							Computed: true,
+							NestedObject: schema.NestedAttributeObject{
+								Attributes: map[string]schema.Attribute{
+									"id": schema.Int64Attribute{
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
 }
 
 // Read refreshes the Terraform state with the latest data.
