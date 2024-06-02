@@ -97,6 +97,43 @@ func (d *coffeesDataSource) Schema(_ context.Context, _ datasource.SchemaRequest
 
 // Read refreshes the Terraform state with the latest data.
 func (d *coffeesDataSource) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var state coffeesDataSourceModel
+
+	coffees, err := d.client.GetCoffees()
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to Read HashiCups Coffees",
+			err.Error(),
+		)
+		return
+	}
+
+	// Map response body to model
+	for _, coffee := range coffees {
+		coffeeState := coffeesModel{
+			ID:          types.Int64Value(int64(coffee.ID)),
+			Name:        types.StringValue(coffee.Name),
+			Teaser:      types.StringValue(coffee.Teaser),
+			Description: types.StringValue(coffee.Description),
+			Price:       types.Float64Value(coffee.Price),
+			Image:       types.StringValue(coffee.Image),
+		}
+
+		for _, ingredient := range coffee.Ingredient {
+			coffeeState.Ingredients = append(coffeeState.Ingredients, coffeesIngredientsModel{
+				ID: types.Int64Value(int64(ingredient.ID)),
+			})
+		}
+
+		state.Coffees = append(state.Coffees, coffeeState)
+	}
+
+	// Set state
+	diags := resp.State.Set(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
 }
 
 // Configure adds the provider configured client to the data source.
