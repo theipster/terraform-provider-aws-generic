@@ -7,6 +7,7 @@ import (
 	"github.com/hashicorp-demoapp/hashicups-client-go"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -23,6 +24,27 @@ func NewCoffeesDataSource() datasource.DataSource {
 // coffeesDataSource is the data source implementation.
 type coffeesDataSource struct {
 	client *hashicups.Client
+}
+
+// coffeesDataSourceModel maps the data source schema data.
+type coffeesDataSourceModel struct {
+	Coffees []coffeesModel `tfsdk:"coffees"`
+}
+
+// coffeesModel maps coffees schema data.
+type coffeesModel struct {
+	ID          types.Int64               `tfsdk:"id"`
+	Name        types.String              `tfsdk:"name"`
+	Teaser      types.String              `tfsdk:"teaser"`
+	Description types.String              `tfsdk:"description"`
+	Price       types.Float64             `tfsdk:"price"`
+	Image       types.String              `tfsdk:"image"`
+	Ingredients []coffeesIngredientsModel `tfsdk:"ingredients"`
+}
+
+// coffeesIngredientsModel maps coffee ingredients data
+type coffeesIngredientsModel struct {
+	ID types.Int64 `tfsdk:"id"`
 }
 
 // Metadata returns the data source type name.
