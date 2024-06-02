@@ -47,7 +47,7 @@ type hashicupsProvider struct {
 
 // Metadata returns the provider type name.
 func (p *hashicupsProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "hashicups"
+	resp.TypeName = "awsgeneric"
 	resp.Version = p.version
 }
 

@@ -1,11 +1,11 @@
 terraform {
   required_providers {
-    hashicups = {
+    awsgeneric = {
       source = "hashicorp.com/edu/hashicups"
     }
   }
 }
 
-provider "hashicups" {}
+provider "awsgeneric" {}
 
-data "hashicups_coffees" "example" {}
+data "awsgeneric_coffees" "example" {}

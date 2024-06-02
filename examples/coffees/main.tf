@@ -1,19 +1,19 @@
 terraform {
   required_providers {
-    hashicups = {
+    awsgeneric = {
       source = "hashicorp.com/edu/hashicups"
     }
   }
 }
 
-provider "hashicups" {
+provider "awsgeneric" {
   host     = "http://localhost:19090"
   username = "education"
   password = "test123"
 }
 
-data "hashicups_coffees" "edu" {}
+data "awsgeneric_coffees" "edu" {}
 
 output "edu_coffees" {
-  value = data.hashicups_coffees.edu
+  value = data.awsgeneric_coffees.edu
 }

@@ -1,4 +1,4 @@
-module terraform-provider-aws-generic
+module terraform-provider-awsgeneric
 
 go 1.21
 

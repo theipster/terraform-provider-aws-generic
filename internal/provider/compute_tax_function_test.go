@@ -21,7 +21,7 @@ func TestComputeTaxFunction_Known(t *testing.T) {
 			{
 				Config: `
         output "test" {
-          value = provider::hashicups::compute_tax(5.00, 0.085)
+          value = provider::awsgeneric::compute_tax(5.00, 0.085)
         }
         `,
 				Check: resource.ComposeAggregateTestCheckFunc(
@@ -42,7 +42,7 @@ func TestComputeTaxFunction_Null(t *testing.T) {
 			{
 				Config: `
         output "test" {
-          value = provider::hashicups::compute_tax(null, 0.085)
+          value = provider::awsgeneric::compute_tax(null, 0.085)
         }
         `,
 				// The parameter does not enable AllowNullValue
