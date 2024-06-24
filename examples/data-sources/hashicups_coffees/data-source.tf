@@ -1,2 +1,2 @@
 # List all coffees.
-data "hashicups_coffees" "all" {}
+data "awsgeneric_coffees" "all" {}

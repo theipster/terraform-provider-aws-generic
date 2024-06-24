@@ -1,18 +1,18 @@
 terraform {
   required_providers {
-    hashicups = {
+    awsgeneric = {
       source = "hashicorp.com/edu/hashicups"
     }
   }
   required_version = ">= 1.8.0"
 }
 
-provider "hashicups" {
+provider "awsgeneric" {
   username = "education"
   password = "test123"
   host     = "http://localhost:19090"
 }
 
 output "total_price" {
-  value = provider::hashicups::compute_tax(5.00, 0.085)
+  value = provider::awsgeneric::compute_tax(5.00, 0.085)
 }
